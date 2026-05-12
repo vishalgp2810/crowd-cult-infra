@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: crowd-cult-backend-migrate
+spec:
+  ttlSecondsAfterFinished: 3600
+  backoffLimit: 1
+  template:
+    spec:
+      serviceAccountName: crowd-cult-backend-sa
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest
+          imagePullPolicy: Always
+          command: ["/app/scripts/run-with-cloud-sql-proxy.sh"]
+          args: ["npm", "run", "migrate"]
+          env:
+            - name: CLOUD_SQL_INSTANCE_CONNECTION_NAME
+              value: crowdandcultprod:asia-south1:crowd-cult-prod-sql
+          envFrom:
+            - configMapRef:
+                name: crowd-cult-backend-config
+            - secretRef:
+                name: crowd-cult-backend-secret
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

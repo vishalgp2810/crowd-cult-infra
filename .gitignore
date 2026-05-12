@@ -1,0 +1,4 @@
+# Never commit real credentials
+k8s/prod/cloud-sql-credentials.local.env
+k8s/prod/*-credentials.local.*
+**/*.local.secret.yaml

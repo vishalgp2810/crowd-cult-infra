@@ -1,0 +1,13 @@
+# Google-managed TLS for GKE Ingress. Requires DNS A records for all domains to point at the LB IP first.
+# Status: kubectl describe managedcertificate crowd-cult-prod-cert -n crowd-cult-prod
+# Wait until Event shows "Certificate is Active" (often 15–60 minutes).
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: crowd-cult-prod-cert
+spec:
+  domains:
+    - crowdandcult.com
+    - www.crowdandcult.com
+    - api.crowdandcult.com
+    - admin.crowdandcult.com

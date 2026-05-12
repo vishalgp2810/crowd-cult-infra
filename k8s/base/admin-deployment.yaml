@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crowd-cult-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crowd-cult-admin
+  template:
+    metadata:
+      labels:
+        app: crowd-cult-admin
+    spec:
+      containers:
+        - name: admin
+          image: asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-admin/crowd-cult-admin:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: crowd-cult-admin-config
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "80m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "384Mi"

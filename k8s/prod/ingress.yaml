@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crowd-cult-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "crowd-cult-prod-ip"
+    networking.gke.io/managed-certificates: "crowd-cult-prod-cert"
+    kubernetes.io/ingress.allow-http: "true"
+spec:
+  rules:
+    - host: api.crowdandcult.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: crowd-cult-backend
+                port:
+                  number: 80
+    - host: crowdandcult.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: crowd-cult-frontend
+                port:
+                  number: 80
+    - host: www.crowdandcult.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: crowd-cult-frontend
+                port:
+                  number: 80
+    - host: admin.crowdandcult.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: crowd-cult-admin
+                port:
+                  number: 80

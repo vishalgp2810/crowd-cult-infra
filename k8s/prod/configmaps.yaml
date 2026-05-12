@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crowd-cult-backend-config
+data:
+  NODE_ENV: production
+  SERVER__HOST: "0.0.0.0"
+  SERVER__PORT: "3000"
+  SUPPRESS_NO_CONFIG_WARNING: "true"
+  AUTH_COOKIE__SECURE: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crowd-cult-frontend-config
+data:
+  NODE_ENV: production
+  PORT: "3000"
+  NEXT_PUBLIC_API_URL: https://api.crowdandcult.com
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crowd-cult-admin-config
+data:
+  NODE_ENV: production
+  PORT: "3000"
+  NEXT_PUBLIC_API_URL: https://api.crowdandcult.com
