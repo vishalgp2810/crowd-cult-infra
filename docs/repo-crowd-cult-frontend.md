@@ -58,32 +58,32 @@ gcloud builds submit `
 gcloud builds submit --tag asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/crowd-cult-frontend/crowd-cult-frontend:latest .
 ```
 
-### Production (`crowdandcultprod`)
+### Production (`crowdandcult-prod`)
 
 bash / zsh:
 
 ```bash
-gcloud config set project crowdandcultprod
+gcloud config set project crowdandcult-prod
 
 gcloud builds submit \
-  --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-frontend/crowd-cult-frontend:latest \
+  --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-frontend/crowd-cult-frontend:latest \
   .
 ```
 
 PowerShell (Windows):
 
 ```powershell
-gcloud config set project crowdandcultprod
+gcloud config set project crowdandcult-prod
 
 gcloud builds submit `
-  --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-frontend/crowd-cult-frontend:latest `
+  --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-frontend/crowd-cult-frontend:latest `
   .
 ```
 
 Single-line (any shell):
 
 ```bash
-gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-frontend/crowd-cult-frontend:latest .
+gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-frontend/crowd-cult-frontend:latest .
 ```
 
 ## Kubernetes

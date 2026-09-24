@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: admin
-          image: asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-admin/crowd-cult-admin:latest
+          image: asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-admin/crowd-cult-admin:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

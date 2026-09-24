@@ -1,27 +1,25 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: crowd-cult-backend-seed
+  name: crowd-cult-backend-db-reset
 spec:
   ttlSecondsAfterFinished: 3600
-  backoffLimit: 1
+  backoffLimit: 0
   template:
     spec:
       serviceAccountName: crowd-cult-backend-sa
       restartPolicy: Never
-      tolerations:
-        - key: autoscaling.gke.io/defrag-candidate
-          operator: Exists
-          effect: NoSchedule
       containers:
-        - name: seed
+        - name: db-reset
           image: asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest
           imagePullPolicy: Always
           command: ["/app/scripts/run-with-cloud-sql-proxy.sh"]
-          args: ["npm", "run", "seed"]
+          args: ["node", "scripts/reset-database.mjs"]
           env:
             - name: CLOUD_SQL_INSTANCE_CONNECTION_NAME
               value: crowdandcult-prod:asia-south1:crowd-cult-prod-sql
+            - name: CONFIRM_DB_RESET
+              value: "true"
           envFrom:
             - configMapRef:
                 name: crowd-cult-backend-config
@@ -29,8 +27,8 @@ spec:
                 name: crowd-cult-backend-secret
           resources:
             requests:
-              cpu: "50m"
-              memory: "128Mi"
+              cpu: "100m"
+              memory: "256Mi"
             limits:
               cpu: "500m"
               memory: "512Mi"

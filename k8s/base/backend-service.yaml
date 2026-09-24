@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: crowd-cult-backend
+  annotations:
+    cloud.google.com/backend-config: '{"default": "crowd-cult-backend-health"}'
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
     app: crowd-cult-backend

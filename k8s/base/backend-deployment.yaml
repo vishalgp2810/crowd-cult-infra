@@ -19,7 +19,7 @@ spec:
           args:
             - "--structured-logs"
             - "--port=3306"
-            - "crowdandcultprod:asia-south1:crowd-cult-prod-sql"
+            - "crowdandcult-prod:asia-south1:crowd-cult-prod-sql"
           securityContext:
             runAsNonRoot: true
           resources:
@@ -30,7 +30,7 @@ spec:
               cpu: "200m"
               memory: "256Mi"
         - name: backend
-          image: asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest
+          image: asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

@@ -1,0 +1,17 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: crowd-cult-backend-health
+spec:
+  # Websockets (/realtime/ws — live table requests): the GCLB backend timeout is also the max
+  # lifetime of a websocket. The 30s default would drop every live board every 30 seconds;
+  # clients reconnect + resync, but an hour keeps them stable. Server heartbeats every 25s.
+  timeoutSec: 3600
+  healthCheck:
+    checkIntervalSec: 15
+    timeoutSec: 10
+    healthyThreshold: 1
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /health
+    port: 3000

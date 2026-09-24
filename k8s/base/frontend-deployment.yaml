@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-frontend/crowd-cult-frontend:latest
+          image: asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-frontend/crowd-cult-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

@@ -8,6 +8,7 @@ data:
   SERVER__PORT: "3000"
   SUPPRESS_NO_CONFIG_WARNING: "true"
   AUTH_COOKIE__SECURE: "true"
+  ARTIST_LISTING__PINNED_SLUGS: "sayori-dhar-3"
 ---
 apiVersion: v1
 kind: ConfigMap

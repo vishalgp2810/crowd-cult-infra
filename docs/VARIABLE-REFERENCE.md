@@ -5,8 +5,8 @@
 | If you need to change… | Where | After change |
 |------------------------|--------|--------------|
 | DB host/port/name/user/password | Secret `crowd-cult-backend-secret` keys `DATABASE__*` | `kubectl apply` secret → **rollout restart** backend |
-| GCP project / bucket / signing SA | Secret: `GCP__PROJECT_ID`, `GCP__STORAGE_BUCKET`, `GCP__SIGNING_SERVICE_ACCOUNT`, `GCP__KEY_FILENAME` | Apply + **restart** backend |
-| JWT, encryption, Google OAuth, email | Secret keys per `secrets.template.yaml` | Apply + **restart** backend |
+| GCP project / bucket / signing SA | Secret: `GCP__PROJECT_ID`, `GCP__STORAGE_BUCKET`, `GCP__STORAGE_PREFIX` (optional), `GCP__SIGNING_SERVICE_ACCOUNT`, `GCP__KEY_FILENAME` | Apply + **restart** backend |
+| JWT, encryption, Google OAuth, email, **Razorpay** | Secret keys per `secrets.template.yaml` | Apply + **restart** backend |
 | `NODE_ENV`, server bind, cookie secure | ConfigMap `crowd-cult-backend-config` | Apply + **restart** if app reads at startup only |
 
 Mapping to Node config: `crowd-cult-backend/config/custom-environment-variables.json`.
@@ -42,3 +42,7 @@ Changing only the ConfigMap **does not** change `NEXT_PUBLIC_*` in the already-b
 | Local DB connection hints | `k8s/prod/cloud-sql-credentials.local.env.example` → copy to gitignored `*.local.env` |
 
 See [LOCAL-DATABASE-AND-STAGING.md](./LOCAL-DATABASE-AND-STAGING.md).
+
+## Razorpay Route
+
+Webhook URL, key mapping, and admin refund notes: [RAZORPAY-ROUTE.md](./RAZORPAY-ROUTE.md).

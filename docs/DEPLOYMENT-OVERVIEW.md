@@ -70,13 +70,13 @@ Commands are detailed in the repo manuals; namespace example: `-n crowd-cult-pro
 
 These are **examples** from the live project; staging should use its own names.
 
-- **GCP project:** `crowdandcultprod`
+- **GCP project:** `crowdandcult-prod`
 - **Region / zone:** `asia-south1` / node pool e.g. `asia-south1-a`
 - **GKE cluster:** `crowd-cult-prod`
 - **Namespace:** `crowd-cult-prod`
-- **Cloud SQL instance connection name:** `crowdandcultprod:asia-south1:crowd-cult-prod-sql`
+- **Cloud SQL instance connection name:** `crowdandcult-prod:asia-south1:crowd-cult-prod-sql`
 - **GCS media bucket (example):** `crowd-cult-prod-media`
-- **Workload Identity GSA (example):** `crowd-cult-sql-proxy@crowdandcultprod.iam.gserviceaccount.com` (bound to KSA `crowd-cult-backend-sa`)
+- **Workload Identity GSA (example):** `crowd-cult-sql-proxy@crowdandcult-prod.iam.gserviceaccount.com` (bound to KSA `crowd-cult-backend-sa`)
 
 Replace all of the above when documenting a **new** stage.
 

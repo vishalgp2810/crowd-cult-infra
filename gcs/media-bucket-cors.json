@@ -1,0 +1,17 @@
+[
+  {
+    "origin": [
+      "https://crowdandcult.com",
+      "https://www.crowdandcult.com",
+      "https://admin.crowdandcult.com",
+      "https://dev.crowdandcult.com",
+      "https://admin.dev.crowdandcult.com",
+      "https://api.dev.crowdandcult.com",
+      "http://localhost:3000",
+      "http://localhost:3001"
+    ],
+    "method": ["GET", "HEAD", "PUT", "POST", "OPTIONS"],
+    "responseHeader": ["Content-Type", "x-goog-resumable", "Content-Length"],
+    "maxAgeSeconds": 3600
+  }
+]

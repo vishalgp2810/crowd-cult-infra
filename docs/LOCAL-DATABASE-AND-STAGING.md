@@ -10,7 +10,7 @@
 - **Cloud SQL Client** IAM role (or org policy allowing instance access) for your Google account.
 - **Production instance connection name** (example for this project):
 
-  `crowdandcultprod:asia-south1:crowd-cult-prod-sql`
+  `crowdandcult-prod:asia-south1:crowd-cult-prod-sql`
 
 ### Where database credentials live (passwords never in this doc)
 
@@ -52,7 +52,7 @@ Should be `True` on Windows after `gcloud auth application-default login`.
 Install: [Cloud SQL Auth Proxy](https://cloud.google.com/sql/docs/mysql/sql-proxy).
 
 ```bash
-export CLOUD_SQL_INSTANCE="crowdandcultprod:asia-south1:crowd-cult-prod-sql"
+export CLOUD_SQL_INSTANCE="crowdandcult-prod:asia-south1:crowd-cult-prod-sql"
 cloud-sql-proxy --port 3306 "$CLOUD_SQL_INSTANCE"
 ```
 
@@ -63,7 +63,7 @@ Leave this terminal open. Connect clients to `127.0.0.1:3306`.
 **Start** (foreground; Ctrl+C to stop):
 
 ```powershell
-$INSTANCE = "crowdandcultprod:asia-south1:crowd-cult-prod-sql"
+$INSTANCE = "crowdandcult-prod:asia-south1:crowd-cult-prod-sql"
 docker run --rm -p 3306:3306 `
   -v "$env:APPDATA/gcloud/application_default_credentials.json:/secrets/adc.json:ro" `
   -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/adc.json `
@@ -74,7 +74,7 @@ docker run --rm -p 3306:3306 `
 **Start detached** (background; fixed container name):
 
 ```powershell
-$INSTANCE = "crowdandcultprod:asia-south1:crowd-cult-prod-sql"
+$INSTANCE = "crowdandcult-prod:asia-south1:crowd-cult-prod-sql"
 docker rm -f crowd-cult-sql-proxy 2>$null
 docker run -d --name crowd-cult-sql-proxy -p 3306:3306 `
   -v "$env:APPDATA/gcloud/application_default_credentials.json:/secrets/adc.json:ro" `
@@ -101,7 +101,7 @@ docker rm crowd-cult-sql-proxy
 Map host **3307** to proxy **3306**:
 
 ```powershell
-$INSTANCE = "crowdandcultprod:asia-south1:crowd-cult-prod-sql"
+$INSTANCE = "crowdandcult-prod:asia-south1:crowd-cult-prod-sql"
 docker run -d --name crowd-cult-sql-proxy -p 3307:3306 `
   -v "$env:APPDATA/gcloud/application_default_credentials.json:/secrets/adc.json:ro" `
   -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/adc.json `
@@ -214,4 +214,4 @@ Use this to clone the pattern from production without missing steps.
 
 Replace with your own for each environment:
 
-`crowdandcultprod:asia-south1:crowd-cult-prod-sql`
+`crowdandcult-prod:asia-south1:crowd-cult-prod-sql`

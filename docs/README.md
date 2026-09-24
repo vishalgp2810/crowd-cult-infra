@@ -10,6 +10,8 @@ Start here, then open the topic you need.
 | [repo-crowd-cult-admin.md](./repo-crowd-cult-admin.md) | Admin app: same patterns as frontend |
 | [LOCAL-DATABASE-AND-STAGING.md](./LOCAL-DATABASE-AND-STAGING.md) | Connect to Cloud SQL from your laptop; checklist for a new stage (e.g. `staging`) |
 | [VARIABLE-REFERENCE.md](./VARIABLE-REFERENCE.md) | Where each kind of setting lives (Secret vs ConfigMap vs rebuild) |
+| [RAZORPAY-ROUTE.md](./RAZORPAY-ROUTE.md) | Razorpay Route keys, webhook URL, admin refund endpoint |
 | [gcp-prerequisites.md](./gcp-prerequisites.md) | GCP APIs, Artifact Registry, GKE, DNS, IAM baselines |
 | [operations-runbook.md](./operations-runbook.md) | Releases, rollback, secrets, monitoring |
 | [cicd-github-actions.md](./cicd-github-actions.md) | GitHub Actions deploy workflow (if used) |
+| [gce-dev/README.md](../gce-dev/README.md) | Single-VM development box (GCE, no Docker, local MySQL) |

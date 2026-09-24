@@ -39,39 +39,39 @@ Template — single-line (any shell):
 gcloud builds submit --tag asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/crowd-cult-backend/crowd-cult-backend:latest .
 ```
 
-### Production (`crowdandcultprod`)
+### Production (`crowdandcult-prod`)
 
 bash / zsh:
 
 ```bash
-gcloud config set project crowdandcultprod
+gcloud config set project crowdandcult-prod
 
 gcloud builds submit \
-  --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest \
+  --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest \
   .
 ```
 
 PowerShell (Windows):
 
 ```powershell
-gcloud config set project crowdandcultprod
+gcloud config set project crowdandcult-prod
 
 gcloud builds submit `
-  --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest `
+  --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest `
   .
 ```
 
 Single-line (any shell):
 
 ```bash
-gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest .
+gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest .
 ```
 
 PowerShell quick copy (recommended):
 
 ```powershell
-gcloud config set project crowdandcultprod
-gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcultprod/crowd-cult-backend/crowd-cult-backend:latest .
+gcloud config set project crowdandcult-prod
+gcloud builds submit --tag asia-south1-docker.pkg.dev/crowdandcult-prod/crowd-cult-backend/crowd-cult-backend:latest .
 ```
 
 - Uses the multi-stage **Dockerfile**: `npm ci`, production image includes **Cloud SQL Proxy** binary and **ca-certificates** (for proxy TLS to Google APIs).
@@ -142,11 +142,29 @@ envFrom:
 | `DATABASE__DB_USER` / `DATABASE__DB_PASS` | | App DB user |
 | `GCP__PROJECT_ID` | `GCP.PROJECT_ID` | Required for GCS signing / client |
 | `GCP__STORAGE_BUCKET` | `GCP.STORAGE_BUCKET` | Media bucket name |
+| `GCP__STORAGE_PREFIX` | `GCP.STORAGE_PREFIX` | Optional folder prefix (e.g. `dev` for local uploads into prod bucket); empty in production |
 | `GCP__KEY_FILENAME` | `GCP.KEY_FILENAME` | Empty on GKE (use WI, not JSON key) |
 | `GCP__SIGNING_SERVICE_ACCOUNT` | `GCP.SIGNING_SERVICE_ACCOUNT` | **Same email** as WI GSA on `crowd-cult-backend-sa` — required for V4 **signed read URLs** |
 | `JWT__JWT_SECRET`, `ENCRYPTION__KEY`, etc. | | See `k8s/base/secrets.template.yaml` |
+| `GOOGLE_MAPS_API_KEY` | `GOOGLE_MAPS_API_KEY` | **Required** for `/common/address/autocomplete` and place details (Places + Geocoding APIs in GCP) |
+| `RAZORPAY__KEY_ID`, `RAZORPAY__KEY_SECRET`, `RAZORPAY__WEBHOOK_SECRET` | `RAZORPAY.*` | **Required** for payments; webhook secret must match Razorpay Dashboard. See [RAZORPAY-ROUTE.md](./RAZORPAY-ROUTE.md). |
 
 Template for a fresh secret: `crowd-cult-infra/k8s/base/secrets.template.yaml`.
+
+### Google Places (address autocomplete)
+
+If production returns `Google Places API key is not configured`:
+
+1. In [Google Cloud Console](https://console.cloud.google.com/apis/library) enable **Places API** and **Geocoding API** for the project.
+2. Create an API key (restrict to server IP or your API hostname as appropriate).
+3. Add to the backend Secret (do not commit the key):
+
+   ```powershell
+   kubectl patch secret crowd-cult-backend-secret -n crowd-cult-prod --type merge -p "{\"stringData\":{\"GOOGLE_MAPS_API_KEY\":\"YOUR_KEY_HERE\"}}"
+   kubectl rollout restart deployment/crowd-cult-backend -n crowd-cult-prod
+   ```
+
+4. Verify: `GET https://api.crowdandcult.com/common/address/autocomplete?q=Pune` returns suggestions.
 
 ## Database migrations and seeds (Kubernetes Jobs)
 
