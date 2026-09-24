@@ -111,7 +111,7 @@ server {
     proxy_http_version 1.1;
     # Websockets (/realtime/ws — live table requests) need the upgrade headers and a long read timeout.
     proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
+    proxy_set_header Connection $connection_upgrade;
     proxy_read_timeout 3600s;
     proxy_send_timeout 3600s;
     proxy_set_header Host $host;
